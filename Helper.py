@@ -275,3 +275,29 @@ def calculate_results(y_true, y_pred):
                   "recall": model_recall,
                   "f1": model_f1}
   return model_results
+
+def plot_cm_using_heat_map(confusion_matrix, cbar = False, class_names = ["True Negative","False Positive","False Negative","True Positive"],color = 'Blues', plot_size=(10,8), plot_title="Confusion matrix"):
+  import matplotlib.pyplot as plt
+  import seaborn as sns
+  import numpy as np
+  
+  if "DataFrame" in str(type(confusion_matrix)):
+    confusion_matrix_numpy = confusion_matrix.to_numpy()
+  else:
+    confusion_matrix_numpy = confusion_matrix
+    
+  group_percentage = ["{0:.2%}".format(value) for value in confusion_matrix_numpy.flatten()/np.sum(confusion_matrix_numpy)]
+  group_count = ["{0:0.0f}".format(value) for value in confusion_matrix_numpy.flatten()]
+  if confusion_matrix.size <= 4:
+    labels = [f"{v1} \n {v2} \n {v3}" for v1, v2, v3 in zip(class_names,group_count,group_percentage)]
+    labels = np.asarray(labels).reshape(2,2)
+  else:
+    labels = [f"{v1} \n {v2}" for v1, v2 in zip(group_count,group_percentage)]
+    label_size = int(np.sqrt(len(group_count)))
+    labels = np.asarray(labels).reshape(label_size,label_size)
+
+  plt.figure(figsize=plot_size)
+  plt.title(plot_title, fontsize=((plot_size[0]+plot_size[1])/2)+3)
+  s = sns.heatmap(confusion_matrix/np.sum(confusion_matrix), annot = labels, fmt='', cmap=color, cbar=cbar)
+  plt.xlabel("Predicted label", fontsize=((plot_size[0]+plot_size[1])/2)+3)
+  plt.ylabel("Actual label", fontsize=((plot_size[0]+plot_size[1])/2)+3)ss
