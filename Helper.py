@@ -300,4 +300,4 @@ def plot_cm_using_heat_map(confusion_matrix, cbar = False, class_names = ["True 
   plt.title(plot_title, fontsize=((plot_size[0]+plot_size[1])/2)+3)
   s = sns.heatmap(confusion_matrix/np.sum(confusion_matrix), annot = labels, fmt='', cmap=color, cbar=cbar)
   plt.xlabel("Predicted label", fontsize=((plot_size[0]+plot_size[1])/2)+3)
-  plt.ylabel("Actual label", fontsize=((plot_size[0]+plot_size[1])/2)+3)ss
+  plt.ylabel("Actual label", fontsize=((plot_size[0]+plot_size[1])/2)+3)
